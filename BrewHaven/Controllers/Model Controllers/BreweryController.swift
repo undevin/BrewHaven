@@ -27,8 +27,10 @@ class BreweryController {
         let breweriesURL = baseURL.appendingPathComponent(breweryEndpoint)
         var components = URLComponents(url: breweriesURL, resolvingAgainstBaseURL: true)
         
-        let stateQuery = URLQueryItem(name: BrewerySearch.city.rawValue, value: searchTerm)
-        components?.queryItems = [stateQuery]
+        let replacedSearchTerm = searchTerm.replacingOccurrences(of: " ", with: "_")
+        
+        let cityQuery = URLQueryItem(name: BrewerySearch.city.rawValue, value: replacedSearchTerm)
+        components?.queryItems = [cityQuery]
         guard let finalURL = components?.url else { return }
         print(finalURL)
         
@@ -51,5 +53,31 @@ class BreweryController {
         }.resume()
     }
     
-    
+    static func fetchByState(searchTerm: String, completion: @escaping (Result<[Brewery], NetworkError>) -> Void) {
+        guard let baseURL = baseURL else { return completion(.failure(.invalidURL))}
+        let breweriesURL = baseURL.appendingPathComponent(breweryEndpoint)
+        var components = URLComponents(url: breweriesURL, resolvingAgainstBaseURL: true)
+        
+        let stateQuery = URLQueryItem(name: BrewerySearch.state.rawValue, value: searchTerm)
+        components?.queryItems = [stateQuery]
+        guard let finalURL = components?.url else { return }
+        print(finalURL)
+        
+        URLSession.shared.dataTask(with: finalURL) { (data, response, error) in
+            if let error = error {
+                return completion(.failure(.thrownError(error)))
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return completion(.failure(.invalidURL))}
+            
+            guard let data = data else { return completion(.failure(.noData))}
+            do {
+                let decoder = JSONDecoder()
+                let topLevel = try decoder.decode(TopLevel.self, from: data)
+                let breweries = topLevel.breweries
+                return completion(.success(breweries))
+            } catch {
+                return completion(.failure(.unableToDecode))
+            }
+        }.resume()
+    }
 }//End of Class

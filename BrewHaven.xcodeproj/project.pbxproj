@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		037E6AD4262FCA960072D8DA /* BreweryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037E6AD3262FCA960072D8DA /* BreweryTableViewCell.swift */; };
 		03D60F26262FA8A20011886F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D60F25262FA8A20011886F /* AppDelegate.swift */; };
 		03D60F28262FA8A20011886F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D60F27262FA8A20011886F /* SceneDelegate.swift */; };
 		03D60F2F262FA8A30011886F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03D60F2E262FA8A30011886F /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		037E6AD3262FCA960072D8DA /* BreweryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreweryTableViewCell.swift; sourceTree = "<group>"; };
 		03D60F22262FA8A20011886F /* BrewHaven.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewHaven.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D60F25262FA8A20011886F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03D60F27262FA8A20011886F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +43,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		037E6AD1262FCA720072D8DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				037E6AD2262FCA770072D8DA /* Custom Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		037E6AD2262FCA770072D8DA /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				037E6AD3262FCA960072D8DA /* BreweryTableViewCell.swift */,
+			);
+			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		03D60F19262FA8A20011886F = {
 			isa = PBXGroup;
 			children = (
@@ -60,20 +78,13 @@
 		03D60F24262FA8A20011886F /* BrewHaven */ = {
 			isa = PBXGroup;
 			children = (
+				037E6AD1262FCA720072D8DA /* Views */,
 				03D60F50262FAEC60011886F /* Helpers */,
 				03D60F40262FA9FC0011886F /* Model */,
 				03D60F45262FAA5B0011886F /* Controllers */,
 				03D60F41262FAA0E0011886F /* Resources */,
-				03D60F3F262FA9EA0011886F /* Views */,
 			);
 			path = BrewHaven;
-			sourceTree = "<group>";
-		};
-		03D60F3F262FA9EA0011886F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		03D60F40262FA9FC0011886F /* Model */ = {
@@ -199,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03D60F48262FAA730011886F /* Brewery.swift in Sources */,
+				037E6AD4262FCA960072D8DA /* BreweryTableViewCell.swift in Sources */,
 				03D60F26262FA8A20011886F /* AppDelegate.swift in Sources */,
 				03D60F3D262FA96F0011886F /* BreweryListViewController.swift in Sources */,
 				03D60F4D262FADD00011886F /* BreweryController.swift in Sources */,
