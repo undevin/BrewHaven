@@ -18,19 +18,27 @@ class BreweryListViewController: UIViewController {
     
     // MARK: - Properties
     var breweries: [Brewery] = []
+    var searchBar: UISearchBar!
     var tableView: UITableView!
     
     //MARK: - Methods
     func configureViewController() {
+        view.addSubview(searchBar)
         view.addSubview(tableView)
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    func configuerSearchBar() {
+        searchBar.delegate = self
+        
     }
     
     func configureTableView() {
         tableView.backgroundColor = .systemRed
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(BreweryTableViewCell.self, forCellReuseIdentifier: "breweryCell")
     }
     
@@ -53,4 +61,10 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
         
         return cell
     }
+}//End of Extension
+
+extension BreweryListViewController: UISearchBarDelegate {
+    
+    
+    
 }//End of Extension
