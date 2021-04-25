@@ -13,40 +13,84 @@ class BreweryListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureNavBar()
+        configuerSearchBar()
         configureTableView()
     }
     
     // MARK: - Properties
     var breweries: [Brewery] = []
-    var searchBar: UISearchBar!
-    var tableView: UITableView!
     
     //MARK: - Methods
     func configureViewController() {
+        view.addSubview(navigationBar)
         view.addSubview(searchBar)
-        view.addSubview(tableView)
+        view.addSubview(breweryTableView)
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    func configureNavBar() {
+        navigationBar.prefersLargeTitles = true
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        navigationBar.isHidden = false
+        navigationController?.title = "Breweries"
+        
+        NSLayoutConstraint.activate([
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            navigationBar.heightAnchor.constraint(equalToConstant: 95)
+        ])
     }
     
     func configuerSearchBar() {
         searchBar.delegate = self
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.heightAnchor.constraint(equalToConstant: 50)
+        ])
         
     }
     
     func configureTableView() {
-        tableView.backgroundColor = .systemRed
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(BreweryTableViewCell.self, forCellReuseIdentifier: "breweryCell")
+        breweryTableView.delegate = self
+        breweryTableView.dataSource = self
+        breweryTableView.translatesAutoresizingMaskIntoConstraints = false
+        breweryTableView.register(BreweryTableViewCell.self, forCellReuseIdentifier: "breweryCell")
+        
+        NSLayoutConstraint.activate([
+            breweryTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            breweryTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            breweryTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            breweryTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
-    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
     }
+    
+    //MARK: - Views
+    let navigationBar: UINavigationBar = {
+        let navigationBar = UINavigationBar()
+        return navigationBar
+    }()
+    
+    let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        return searchBar
+    }()
+    
+    let breweryTableView: UITableView = {
+        let tableView = UITableView()
+        return tableView
+    }()
+    
 }//End of Class
 
 //MARK: - Extensions
@@ -56,8 +100,9 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "breweryCell", for: indexPath) as? BreweryTableViewCell else { return UITableViewCell()}
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "breweryCell", for: indexPath)// as? BreweryTableViewCell else { return UITableViewCell()}
+        let brewery = breweries[indexPath.row]
+        cell.textLabel?.text = brewery.name
         
         return cell
     }
