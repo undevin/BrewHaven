@@ -25,6 +25,7 @@ class BreweryListViewController: UIViewController {
     func configureViewController() {
         view.addSubview(navigationBar)
         view.addSubview(searchBar)
+        view.addSubview(segmentedControl)
         view.addSubview(breweryTableView)
         view.backgroundColor = .systemBackground
     }
@@ -53,6 +54,14 @@ class BreweryListViewController: UIViewController {
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             searchBar.heightAnchor.constraint(equalToConstant: 50)
         ])
+        
+    }
+    
+    func configureSegmentedControl() {
+        
+    }
+    
+    @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
         
     }
     
@@ -86,6 +95,15 @@ class BreweryListViewController: UIViewController {
         return searchBar
     }()
     
+    let segmentedControl: UISegmentedControl = {
+        let segments = ["by State", "by City", "by Name"]
+        let segmentedControl = UISegmentedControl(items: segments)
+        segmentedControl.addTarget(self, action: #selector(segmentDidChange), for: .valueChanged)
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.selectedSegmentTintColor = .systemGray5
+        return segmentedControl
+    }()
+    
     let breweryTableView: UITableView = {
         let tableView = UITableView()
         return tableView
@@ -100,7 +118,7 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "breweryCell", for: indexPath)// as? BreweryTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "breweryCell", for: indexPath) as? BreweryTableViewCell else { return UITableViewCell()}
         let brewery = breweries[indexPath.row]
         cell.textLabel?.text = brewery.name
         
