@@ -80,4 +80,10 @@ class BreweryController {
             }
         }.resume()
     }
+    
+    static func fetchByName(searchTerm: String, completion: @escaping (Result<[Brewery], NetworkError>) -> Void) {
+     
+        guard let baseURL = baseURL else { return completion(.failure(.invalidURL))}
+        let
+    }
 }//End of Class

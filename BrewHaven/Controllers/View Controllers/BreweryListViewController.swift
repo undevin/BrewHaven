@@ -17,24 +17,25 @@ class BreweryListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.title = "BrewHaven"
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     // MARK: - Properties
     var breweries: [Brewery] = []
+    var searchText: String = ""
+    let reuseID = "breweryCell"
     
     //MARK: - Methods
     func configureViewController() {
-        
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.title = "BrewHaven"
         view.addSubview(searchBar)
         view.addSubview(segmentedControl)
         view.addSubview(breweryTableView)
         configuerSearchBar()
         configureSegmentedControl()
         configureTableView()
-        view.backgroundColor = .systemBackground
     }
     
     func configuerSearchBar() {
@@ -48,12 +49,10 @@ class BreweryListViewController: UIViewController {
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             searchBar.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
     }
     
     func configureSegmentedControl() {
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.selectedSegmentTintColor = .systemGray6
         
         NSLayoutConstraint.activate([
             segmentedControl.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
@@ -63,14 +62,41 @@ class BreweryListViewController: UIViewController {
     }
     
     @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
-        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            BreweryController.fetchByState(searchTerm: searchText) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let breweries):
+                        self?.breweries = breweries
+                        self?.breweryTableView.reloadData()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        case 1:
+            BreweryController.fetchByCity(searchTerm: searchText) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let breweries):
+                        self?.breweries = breweries
+                        self?.breweryTableView.reloadData()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        default:
+            print("Stuff happens here")
+        }
     }
     
     func configureTableView() {
         breweryTableView.delegate = self
         breweryTableView.dataSource = self
         breweryTableView.translatesAutoresizingMaskIntoConstraints = false
-        breweryTableView.register(BreweryTableViewCell.self, forCellReuseIdentifier: "breweryCell")
+        breweryTableView.register(BreweryTableViewCell.self, forCellReuseIdentifier: reuseID)
         
         NSLayoutConstraint.activate([
             breweryTableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
@@ -114,7 +140,7 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "breweryCell", for: indexPath) as? BreweryTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath) as? BreweryTableViewCell else { return UITableViewCell()}
         let brewery = breweries[indexPath.row]
         cell.textLabel?.text = brewery.name
         
@@ -124,6 +150,21 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension BreweryListViewController: UISearchBarDelegate {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        self.searchText = searchText
+        searchBar.resignFirstResponder()
+        searchBar.showsCancelButton = false
+    }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
     
 }//End of Extension
