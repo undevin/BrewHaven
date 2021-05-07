@@ -108,7 +108,7 @@ class BreweryController {
             } catch {
                 return completion(.failure(.unableToDecode))
             }
-        }
+        }.resume()
         
     }
 }//End of Class

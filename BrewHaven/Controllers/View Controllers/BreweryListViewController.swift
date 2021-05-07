@@ -99,7 +99,7 @@ class BreweryListViewController: UIViewController {
         let segmentedControl = UISegmentedControl(items: segments)
         segmentedControl.addTarget(self, action: #selector(segmentDidChange), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.selectedSegmentTintColor = .systemGray5
+        segmentedControl.selectedSegmentTintColor = .systemGray
         segmentedControl.selectedSegmentIndex = 0
         return segmentedControl
     }()
