@@ -22,8 +22,8 @@ class BreweryListViewController: UIViewController {
     
     // MARK: - Properties
     var breweries: [Brewery] = []
-    var searchText: String = ""
     let reuseID = "breweryCell"
+    var selectedIndex = 0
     
     //MARK: - Methods
     func configureViewController() {
@@ -61,37 +61,6 @@ class BreweryListViewController: UIViewController {
         ])
     }
     
-    @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            BreweryController.fetchByState(searchTerm: searchText) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let breweries):
-                        self?.breweries = breweries
-                        self?.breweryTableView.reloadData()
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-        case 1:
-            BreweryController.fetchByCity(searchTerm: searchText) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let breweries):
-                        self?.breweries = breweries
-                        self?.breweryTableView.reloadData()
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-        default:
-            print("Stuff happens here")
-        }
-    }
-    
     func configureTableView() {
         breweryTableView.delegate = self
         breweryTableView.dataSource = self
@@ -104,6 +73,14 @@ class BreweryListViewController: UIViewController {
             breweryTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             breweryTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0: selectedIndex = 0
+        case 1: selectedIndex = 1
+        default: selectedIndex = 2
+        }
     }
     
     // MARK: - Navigation
@@ -123,6 +100,7 @@ class BreweryListViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(segmentDidChange), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentTintColor = .systemGray5
+        segmentedControl.selectedSegmentIndex = 0
         return segmentedControl
     }()
     
@@ -142,7 +120,7 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath) as? BreweryTableViewCell else { return UITableViewCell()}
         let brewery = breweries[indexPath.row]
-        cell.textLabel?.text = brewery.name
+        cell.brewery = brewery
         
         return cell
     }
@@ -152,7 +130,44 @@ extension BreweryListViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-        self.searchText = searchText
+        
+        if selectedIndex == 0 {
+            BreweryController.fetchByState(searchTerm: searchText) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let breweries):
+                        self?.breweries = breweries
+                        self?.breweryTableView.reloadData()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        } else if selectedIndex == 1 {
+            BreweryController.fetchByCity(searchTerm: searchText) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let breweries):
+                        self?.breweries = breweries
+                        self?.breweryTableView.reloadData()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        } else {
+            BreweryController.fetchByName(searchTerm: searchText) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let breweries):
+                        self?.breweries = breweries
+                        self?.breweryTableView.reloadData()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
         searchBar.resignFirstResponder()
         searchBar.showsCancelButton = false
     }
