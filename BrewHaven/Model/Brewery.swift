@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct TopLevel: Codable {
-    var breweries: [Brewery]
-    
-}//End of Struct
-
 struct Brewery: Codable {
     let name: String
     let breweryType: String
@@ -32,3 +27,4 @@ struct Brewery: Codable {
         case website = "website_url"
     }
 }//End of Struct
+

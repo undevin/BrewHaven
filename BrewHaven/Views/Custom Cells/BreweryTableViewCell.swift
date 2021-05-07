@@ -39,27 +39,30 @@ class BreweryTableViewCell: UITableViewCell {
     // MARK: - Views
     let breweryNameLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 24)
         return label
     }()
     
     let breweryTypeLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
     
     func constrainBreweryNameLabel() {
+        breweryNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             breweryNameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 18),
             breweryNameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
-            breweryNameLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
     
     func constrainBreweryTypeLabel() {
+        breweryTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             breweryTypeLabel.topAnchor.constraint(equalTo: breweryNameLabel.bottomAnchor, constant: 12),
             breweryTypeLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
-            breweryTypeLabel.heightAnchor.constraint(equalToConstant: 18)
+            breweryTypeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 18),
         ])
     }
 }//End of Class

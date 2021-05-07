@@ -43,8 +43,7 @@ class BreweryController {
             guard let data = data else { return completion(.failure(.noData))}
             do {
                 let decoder = JSONDecoder()
-                let topLevel = try decoder.decode(TopLevel.self, from: data)
-                let breweries = topLevel.breweries
+                let breweries = try decoder.decode([Brewery].self, from: data)
                 return completion(.success(breweries))
                 
             } catch {
@@ -72,8 +71,7 @@ class BreweryController {
             guard let data = data else { return completion(.failure(.noData))}
             do {
                 let decoder = JSONDecoder()
-                let topLevel = try decoder.decode(TopLevel.self, from: data)
-                let breweries = topLevel.breweries
+                let breweries = try decoder.decode([Brewery].self, from: data)
                 return completion(.success(breweries))
             } catch {
                 return completion(.failure(.unableToDecode))
@@ -102,13 +100,11 @@ class BreweryController {
             guard let data = data else { return completion(.failure(.noData))}
             do {
                 let decoder = JSONDecoder()
-                let topLevel = try decoder.decode(TopLevel.self, from: data)
-                let breweries = topLevel.breweries
+                let breweries = try decoder.decode([Brewery].self, from: data)
                 return completion(.success(breweries))
             } catch {
                 return completion(.failure(.unableToDecode))
             }
         }.resume()
-        
     }
 }//End of Class

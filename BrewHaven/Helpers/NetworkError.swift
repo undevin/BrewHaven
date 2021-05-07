@@ -23,7 +23,7 @@ enum NetworkError: LocalizedError {
         case .noData:
             return "The server responded with no data."
         case .unableToDecode:
-            return "The server responded with bad data."
+            return "The server responded with bad data. Unable to decode."
         }
     }
 }

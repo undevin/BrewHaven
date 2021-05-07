@@ -15,7 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let scene = (scene as? UIWindowScene) {
             let window = UIWindow(windowScene: scene)
-            window.rootViewController = BreweryListViewController()
+            let navVC = UINavigationController()
+            let breweryVC = BreweryListViewController()
+            navVC.viewControllers = [breweryVC]
+            window.rootViewController = navVC
             self.window = window
             window.makeKeyAndVisible()
         }

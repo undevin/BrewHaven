@@ -17,7 +17,6 @@ class BreweryListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     // MARK: - Properties
@@ -29,7 +28,7 @@ class BreweryListViewController: UIViewController {
     func configureViewController() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.title = "BrewHaven"
+        navigationItem.title = "BrewHaven"
         view.addSubview(searchBar)
         view.addSubview(segmentedControl)
         view.addSubview(breweryTableView)
@@ -91,6 +90,7 @@ class BreweryListViewController: UIViewController {
     //MARK: - Views
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.autocapitalizationType = .none
         return searchBar
     }()
     
@@ -99,7 +99,7 @@ class BreweryListViewController: UIViewController {
         let segmentedControl = UISegmentedControl(items: segments)
         segmentedControl.addTarget(self, action: #selector(segmentDidChange), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.selectedSegmentTintColor = .systemGray
+        segmentedControl.selectedSegmentTintColor = .systemGray3
         segmentedControl.selectedSegmentIndex = 0
         return segmentedControl
     }()
@@ -124,6 +124,11 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+    
 }//End of Extension
 
 extension BreweryListViewController: UISearchBarDelegate {
