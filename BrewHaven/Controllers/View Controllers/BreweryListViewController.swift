@@ -129,6 +129,10 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
         return 90
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
 }//End of Extension
 
 extension BreweryListViewController: UISearchBarDelegate {
