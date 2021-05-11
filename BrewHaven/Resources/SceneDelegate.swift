@@ -17,7 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: scene)
             let navVC = UINavigationController()
             let breweryVC = BreweryListViewController()
-            navVC.viewControllers = [breweryVC]
+            let breweryDetailVC = BreweryDetailViewController()
+            navVC.viewControllers = [breweryVC, breweryDetailVC]
             window.rootViewController = navVC
             self.window = window
             window.makeKeyAndVisible()

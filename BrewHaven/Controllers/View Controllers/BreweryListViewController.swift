@@ -74,17 +74,25 @@ class BreweryListViewController: UIViewController {
         ])
     }
     
-    @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0: selectedIndex = 0
-        case 1: selectedIndex = 1
-        default: selectedIndex = 2
-        }
+    func resetTableView() {
+        breweries.removeAll()
+        self.breweryTableView.reloadData()
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
     
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+    @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            selectedIndex = 0
+            resetTableView()
+        case 1:
+            selectedIndex = 1
+            resetTableView()
+        default:
+            selectedIndex = 2
+            resetTableView()
+        }
     }
     
     //MARK: - Views
@@ -130,9 +138,10 @@ extension BreweryListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let vc = BreweryDetailViewController()
+        vc.brewery = breweries[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-    
 }//End of Extension
 
 extension BreweryListViewController: UISearchBarDelegate {

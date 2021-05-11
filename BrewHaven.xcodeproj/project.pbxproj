@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030D3978264A29EF004C34C3 /* BreweryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D3977264A29EF004C34C3 /* BreweryDetailViewController.swift */; };
 		037E6AD4262FCA960072D8DA /* BreweryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037E6AD3262FCA960072D8DA /* BreweryTableViewCell.swift */; };
 		03D60F26262FA8A20011886F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D60F25262FA8A20011886F /* AppDelegate.swift */; };
 		03D60F28262FA8A20011886F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D60F27262FA8A20011886F /* SceneDelegate.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030D3977264A29EF004C34C3 /* BreweryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreweryDetailViewController.swift; sourceTree = "<group>"; };
 		037E6AD3262FCA960072D8DA /* BreweryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreweryTableViewCell.swift; sourceTree = "<group>"; };
 		03D60F22262FA8A20011886F /* BrewHaven.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewHaven.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D60F25262FA8A20011886F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				03D60F3C262FA96F0011886F /* BreweryListViewController.swift */,
+				030D3977264A29EF004C34C3 /* BreweryDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 			files = (
 				03D60F48262FAA730011886F /* Brewery.swift in Sources */,
 				037E6AD4262FCA960072D8DA /* BreweryTableViewCell.swift in Sources */,
+				030D3978264A29EF004C34C3 /* BreweryDetailViewController.swift in Sources */,
 				03D60F26262FA8A20011886F /* AppDelegate.swift in Sources */,
 				03D60F3D262FA96F0011886F /* BreweryListViewController.swift in Sources */,
 				03D60F4D262FADD00011886F /* BreweryController.swift in Sources */,
